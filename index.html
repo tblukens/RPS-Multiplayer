@@ -27,35 +27,37 @@
         </div>
         <div class="row" id="main-game-row">
             <div class="col-md-4 border border-info pt-2" id="player1">
-                <h2 id="playerOneName">player 1</h2>
-                <p>Rock</p>
-                <p>Paper</p>
-                <p>Scissors</p>
+                <h2 id="playerOneName">Player 1</h2>
+                <button type="button" class="btn btn-primary btn-sm btn-block choice">Rock</button>
+                <button type="button" class="btn btn-primary btn-sm btn-block choice">Paper</button>
+                <button type="button" class="btn btn-primary btn-sm btn-block choice">Scissors</button>
             </div>
-            <div id="middle-section-name" class="col-md-4 pt-2">
-                <div class="form-group text-left">
-                    <label for="your-name">Your Name:</label>
-                    <input type="text" class="form-control" name="your-name" id="your-name">
-                </div>
-                <div class="row text-right">
-                    <div class="col">
-                    <button id="submit" type="submit" class="btn btn-primary">Submit</button></div>
-                </div>
-            </div>
-            <div id="middle-section-greeting" class="col-md-4 pt-2">
+            <div id="middle-section" class="col-md-4 pt-2">
 
             </div>
             <div class="col-md-4 border border-info pt-2" id="player2">
-                <h2 id="playerTwoName">player 2</h2>
-                <p>Rock</p>
-                <p>Paper</p>
-                <p>Scissors</p>
+                <h2 id="playerTwoName">Player 2</h2>
+                <button type="button" class="btn btn-primary btn-sm btn-block choice">Rock</button>
+                <button type="button" class="btn btn-primary btn-sm btn-block choice">Paper</button>
+                <button type="button" class="btn btn-primary btn-sm btn-block choice">Scissors</button>
             </div>
         </div>
         <div class="row" id="stats-section">
             <div class="col-md-4" id="playerOneStats"></div>
-            <div class="col-md-4"></div>
+            <div class="col-md-4"> </div>
             <div class="col-md-4" id="playerTwoStats"></div>
+        </div>
+        <div class="row" id="set-name">
+            <div class="col-md-4">
+            </div>
+            <div class="form-group text-left col">
+                <label for="your-name">Your Name:</label>
+                <input type="text" class="form-control" name="your-name" id="your-name">
+
+                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="col-md-4">
+            </div>
         </div>
 
     </div>
