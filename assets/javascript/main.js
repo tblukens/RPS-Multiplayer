@@ -129,6 +129,13 @@ $(document).ready(function () {
             // $("#set-name").hide();
         }
 
+        if (!player1 && !player2) {
+            
+		database.ref("/chat/").remove();
+		database.ref("/turn/").remove();
+		database.ref("/results/").remove();
+        }
+
     });
     // click function for setting user
     $('#submit').on('click', function (e) {
@@ -365,8 +372,35 @@ $(document).ready(function () {
         $("#results").html(snapshot.val());
     });
 
-    // if (database.ref("/players/player2").exists() && database.ref("/players/player1").exists()) {
-        
-    //     $("#set-name").hide();
-    // }
+    $("#chat-submit").on("click", function (event) {
+        event.preventDefault();
+
+        // First, make sure that the player exists and the message box is non-empty
+        if ((playersName !== "") && ($("#chat-msg").val().trim() !== "")) {
+            // Grab the message from the input box and subsequently reset the input box
+            var msg = playersName + ": " + $("#chat-msg").val().trim();
+            $("#chat-msg").val("");
+
+            // Get a key for the new chat entry
+            var chatKey = database.ref().child("/chat/").push().key;
+
+            // Save the new chat entry
+            database.ref("/chat/" + chatKey).set(msg);
+        }
+    });
+
+    $("#chat-msg").keypress(function(e) {
+        if  (e.which == 13) {
+            $("#chat-submit").click();
+        }
+    })
+
+    // Attach a listener to the database /chat/ node to listen for any new chat messages
+    database.ref("/chat/").on("child_added", function (snapshot) {
+        var chatMsg = snapshot.val();
+        var chatEntry = $("<p>").html(chatMsg);
+
+        $("#chat-display").prepend(chatEntry);
+        $("#chat-dDisplay").scrollTop($("#chat-display")[0].scrollHeight);
+    });
 });

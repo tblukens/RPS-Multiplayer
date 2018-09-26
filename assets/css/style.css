@@ -2,3 +2,10 @@
 .yourTurn {
     background: #96b996;
 }
+
+#chat-display {
+    width: 100%;
+    height: 150px;
+    /* background-color:Gray; */
+    overflow-y: auto;
+}
