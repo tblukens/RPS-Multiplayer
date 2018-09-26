@@ -114,11 +114,11 @@ $(document).ready(function () {
             player2 = null;
             player2Name = "";
         }
-        if (snapshot.child("player2").exists() && snapshot.child("player1").exists() === false) {
+        if (snapshot.child("player2").exists() && snapshot.child("player1").exists() === false && playersName === null) {
             $("#set-name").show();
         }
 
-        if (snapshot.child("player2").exists() && snapshot.child("player1").exists() && playersName !== null) {
+        if (snapshot.child("player2").exists() && snapshot.child("player1").exists() && playersName === null) {
             $("#set-name").hide();
         }
         if (player1 && player2) {
@@ -126,6 +126,7 @@ $(document).ready(function () {
             $("#player1").addClass("yourTurn");
             // update panel showing player may select
             $("#middle-section").html("Waiting on " + player1Name + " to choose...");
+            // $("#set-name").hide();
         }
 
     });
@@ -169,20 +170,20 @@ $(document).ready(function () {
 
             playersRef.child("/player2").onDisconnect().remove();
         } else if (player1 !== null && player2 !== null) {
-            console.log("Queued Player");
+            // console.log("Queued Player");
 
-            playersName = $('#your-name').val().trim();
-            queued = {
-                name: playersName,
-                wins: 0,
-                losses: 0,
-                ties: 0,
-                selection: ""
-            }
+            // playersName = $('#your-name').val().trim();
+            // queued = {
+            //     name: playersName,
+            //     wins: 0,
+            //     losses: 0,
+            //     ties: 0,
+            //     selection: ""
+            // }
 
-            queueRef.child(playersName).push(queued);
+            // queueRef.child(playersName).push(queued);
 
-            queueRef.child(playersName).onDisconnect().remove();
+            // queueRef.child(playersName).onDisconnect().remove();
         }
         $("#your-name").val("");
         $("#set-name").hide();
@@ -192,15 +193,14 @@ $(document).ready(function () {
     // Listener that detects user disconnection events
     playersRef.on("child_removed", function (snapshot) {
         console.log(snapshot)
-        if (snapshot.key === "player1") {
+        if (snapshot.key === "player1" && playersName === null) {
             console.log("Player 1 Has Left")
 
             $("#set-name").show();
-        } else if (snapshot.key === "player2") {
+        } else if (snapshot.key === "player2" && playersName === null) {
             console.log("Player 2 Has Left")
             $("#set-name").show();
         }
-        $("#set-name").show();
         $("#playerOneName").text("Player 1")
         $("#player1").removeClass("yourTurn");
         $("#playerTwoName").text("Player 2")
@@ -364,4 +364,9 @@ $(document).ready(function () {
     resultsRef.on("value", function (snapshot) {
         $("#results").html(snapshot.val());
     });
+
+    // if (database.ref("/players/player2").exists() && database.ref("/players/player1").exists()) {
+        
+    //     $("#set-name").hide();
+    // }
 });
