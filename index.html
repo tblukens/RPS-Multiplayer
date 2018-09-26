@@ -26,39 +26,55 @@
             </div>
         </div>
         <div class="row" id="main-game-row">
-            <div class="col-md-4 border border-info pt-2" id="player1">
-                <h2 id="playerOneName">Player 1</h2>
-                <button type="button" class="btn btn-primary btn-sm btn-block choice">Rock</button>
-                <button type="button" class="btn btn-primary btn-sm btn-block choice">Paper</button>
-                <button type="button" class="btn btn-primary btn-sm btn-block choice">Scissors</button>
+            <div class="col-md-4 order-md-2 pt-2">
+                <div class="row">
+                    <div class="col" id="middle-section"> </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col" id="results"> </div>
+                </div>
             </div>
-            <div id="middle-section" class="col-md-4 pt-2">
+            <div class="col-md-4 border border-info order-md-1" id="player1">
+                <div class="row">
+                    <div class="col pt-2">
+                        <h2 id="playerOneName">Player 1</h2>
+                        <button type="button" class="btn btn-primary btn-sm btn-block choice" data-name="Rock">Rock</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-block choice" data-name="Paper">Paper</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-block choice" data-name="Scissors">Scissors</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="playerOneStats"></div>
+                </div>
+            </div>
+            <div class="col-md-4 border border-info order-md-3" id="player2">
+                <div class="row">
+                    <div class="col pt-2">
+                        <h2 id="playerTwoName">Player 2</h2>
+                        <button type="button" class="btn btn-primary btn-sm btn-block choice" data-name="Rock">Rock</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-block choice" data-name="Paper">Paper</button>
+                        <button type="button" class="btn btn-primary btn-sm btn-block choice" data-name="Scissors">Scissors</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="playerTwoStats"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            </div>
-            <div class="col-md-4 border border-info pt-2" id="player2">
-                <h2 id="playerTwoName">Player 2</h2>
-                <button type="button" class="btn btn-primary btn-sm btn-block choice">Rock</button>
-                <button type="button" class="btn btn-primary btn-sm btn-block choice">Paper</button>
-                <button type="button" class="btn btn-primary btn-sm btn-block choice">Scissors</button>
-            </div>
+    <div class="row" id="set-name">
+        <div class="col-md-4">
         </div>
-        <div class="row" id="stats-section">
-            <div class="col-md-4" id="playerOneStats"></div>
-            <div class="col-md-4" id="results"> </div>
-            <div class="col-md-4" id="playerTwoStats"></div>
-        </div>
-        <div class="row" id="set-name">
-            <div class="col-md-4">
-            </div>
-            <div class="form-group text-left col">
-                <label for="your-name">Your Name:</label>
-                <input type="text" class="form-control" name="your-name" id="your-name">
+        <div class="form-group text-left col">
+            <label for="your-name">Your Name:</label>
+            <input type="text" class="form-control" name="your-name" id="your-name">
 
-                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
-            </div>
-            <div class="col-md-4">
-            </div>
+            <button id="submit" type="submit" class="btn btn-primary">Submit</button>
         </div>
+        <div class="col-md-4">
+        </div>
+    </div>
 
     </div>
 
