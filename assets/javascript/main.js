@@ -57,7 +57,7 @@ var player1Losses;
 var player2Losses;
 var turn = 1;
 var freshGame = true;
-var queued;
+var queuedPlayers = [];
 var queueNumber = 1;
 
 var choices = ['Rock', 'Paper', 'Scissors'];
@@ -116,24 +116,30 @@ $(document).ready(function () {
         }
         if (snapshot.child("player2").exists() && snapshot.child("player1").exists() === false && playersName === null) {
             $("#set-name").show();
+        } else if (snapshot.child("player2").exists() && snapshot.child("player1").exists() === false && playersName !== null) {
+            $("#set-name").hide();
         }
 
-        if (snapshot.child("player2").exists() && snapshot.child("player1").exists() && playersName === null) {
+        if (snapshot.child("player2").exists() && snapshot.child("player1").exists() && playersName !== null) {
             $("#set-name").hide();
+        } else if (snapshot.child("player2").exists() && snapshot.child("player1").exists() && playersName === null) {
+            $("#exampleModalLongTitle2").text(player1Name+" vs "+player2Name)
+            $("#set-name").hide();
+            $("#please-wait").modal("show");
         }
         if (player1 && player2) {
             // show player 1 turn
             $("#player1").addClass("yourTurn");
             // update panel showing player may select
             $("#middle-section").html("Waiting on " + player1Name + " to choose...");
-            // $("#set-name").hide();
+            $("#set-name").hide();
         }
 
         if (!player1 && !player2) {
-            
-		database.ref("/chat/").remove();
-		database.ref("/turn/").remove();
-		database.ref("/results/").remove();
+
+            database.ref("/chat/").remove();
+            database.ref("/turn/").remove();
+            database.ref("/results/").remove();
         }
 
     });
@@ -177,20 +183,26 @@ $(document).ready(function () {
 
             playersRef.child("/player2").onDisconnect().remove();
         } else if (player1 !== null && player2 !== null) {
-            // console.log("Queued Player");
+            console.log("Queued Player");
+
+            $("#queuedModal").modal('show');
 
             // playersName = $('#your-name').val().trim();
             // queued = {
             //     name: playersName,
-            //     wins: 0,
-            //     losses: 0,
-            //     ties: 0,
-            //     selection: ""
             // }
 
             // queueRef.child(playersName).push(queued);
 
             // queueRef.child(playersName).onDisconnect().remove();
+
+
+
+            // queuedPlayers.push(queued);
+
+
+
+            $("#queueNumber").text(queuedPlayers.length)
         }
         $("#your-name").val("");
         $("#set-name").hide();
@@ -374,11 +386,13 @@ $(document).ready(function () {
 
     $("#chat-submit").on("click", function (event) {
         event.preventDefault();
+        $(".chatP:odd").addClass("bg-dark")
+        $(".chatP:even").addClass("bg-info")
 
         // First, make sure that the player exists and the message box is non-empty
-        if ((playersName !== "") && ($("#chat-msg").val().trim() !== "")) {
+        if ((playersName !== null) && ($("#chat-msg").val().trim() !== "")) {
             // Grab the message from the input box and subsequently reset the input box
-            var msg = playersName + ": " + $("#chat-msg").val().trim();
+            var msg = "<span class='playerName'>" + playersName.toUpperCase() + ":</span> " + $("#chat-msg").val().trim();
             $("#chat-msg").val("");
 
             // Get a key for the new chat entry
@@ -389,8 +403,8 @@ $(document).ready(function () {
         }
     });
 
-    $("#chat-msg").keypress(function(e) {
-        if  (e.which == 13) {
+    $("#chat-msg").keypress(function (e) {
+        if (e.which == 13) {
             $("#chat-submit").click();
         }
     })
@@ -399,8 +413,38 @@ $(document).ready(function () {
     database.ref("/chat/").on("child_added", function (snapshot) {
         var chatMsg = snapshot.val();
         var chatEntry = $("<p>").html(chatMsg);
+        chatEntry.addClass("m-0 chatP");
 
-        $("#chat-display").prepend(chatEntry);
-        $("#chat-dDisplay").scrollTop($("#chat-display")[0].scrollHeight);
+        $("#chat-display").append(chatEntry);
+        $("#chat-display").scrollTop($("#chat-display")[0].scrollHeight);
+    });
+
+    // queueRef.on("child_added", function (snapshot) {
+    //         queuedPlayers.push(snapshot.key)
+    //         var qP = $("<p>");
+    //         qP.text(queuedPlayers.length+". " + snapshot.key)
+    //         $("#queuedPlayers").append(qP)
+    //     console.log(snapshot)
+    // });
+
+    // queueRef.on("child_removed", function (snapshot) {
+
+    //     console.log(snapshot);
+    // })
+
+    $(document).keypress(function () {
+        $(".chatP:odd").addClass("bg-dark")
+        $(".chatP:even").addClass("bg-info")
+    });
+    $(document).on("click", function () {
+        $(".chatP:odd").addClass("bg-dark")
+        $(".chatP:even").addClass("bg-info")
+    })
+    $(".chatP:odd").addClass("bg-dark");
+    $(".chatP:even").addClass("bg-info");
+
+    firebase.database().ref('/queue/' + playersName).once('value').then(function (snapshot) {
+        var check = snapshot.val();
+        console.log(check)
     });
 });

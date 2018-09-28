@@ -26,14 +26,7 @@
             </div>
         </div>
         <div class="row" id="main-game-row">
-            <div class="col-md-4 order-md-2 pt-2">
-                <div class="row">
-                    <div class="col" id="middle-section"> </div>
-                </div>
-                <div class="row pt-2">
-                    <div class="col" id="results"> </div>
-                </div>
-            </div>
+
             <div class="col-md-4 border border-info order-md-1" id="player1">
                 <div class="row">
                     <div class="col pt-2">
@@ -47,6 +40,16 @@
                     <div class="col" id="playerOneStats"></div>
                 </div>
             </div>
+
+            <div class="col-md-4 order-md-2 pt-1 pb-1 border border-secondary">
+                <div class="row">
+                    <div class="col" id="middle-section"> </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col" id="results"> </div>
+                </div>
+            </div>
+
             <div class="col-md-4 border border-info order-md-3" id="player2">
                 <div class="row">
                     <div class="col pt-2">
@@ -73,17 +76,18 @@
             <div class="col-md-4">
             </div>
         </div>
-        <div class="row" id="chat-section">
+        <div class="row align-items-end" id="chat-section">
             <div class="col-md-4">
             </div>
-            <div class="col border border-info">
-                <div class="row">
-                    <div class="border-bottom border-info col align-bottom text-left" id="chat-display">
-                        
+            <div class="col border border-info align-items-end">
+                <div class="row align-items-end">
+                    <div class="text-white border-bottom border-info col bg-secondary align-bottom text-left mx-auto p-0"
+                        id="chat-display">
+
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group text-left col">
+                    <div class="input-group text-left col p-0">
                         <!-- <label for="chat-msg">Chat:</label> -->
                         <input type="text" class="form-control" name="chat-msg" id="chat-msg">
 
@@ -95,10 +99,63 @@
             <div class="col-md-4">
             </div>
         </div>
+        <!-- <div class="row mx-auto">
+            <div class="col-md-4"></div>
+            <div class="col-md-4" id="queuedPlayers">
+                <h4>Queued Players: </h4>
+            </div>
+            <div class="col-md-4"></div>
+        </div> -->
 
     </div>
 
 
+
+    <!-- Modal -->
+    <div class="modal fade" id="queuedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Added to queue...</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Since there are 2 players currently playing you have been added to the queue. You will be put
+                        into the game when one or both of them leave.
+                    </p>
+                    <p>
+                        Your current number in the queue: <span id="queueNumber"></span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="please-wait" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle2"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>There are currently 2 players in the game. Please wait until one leaves.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
