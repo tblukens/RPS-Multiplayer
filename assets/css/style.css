@@ -36,16 +36,16 @@ h1 {
 }
 
 #middle-section {
-    background: #2299ff;
+    background: lightcoral;
 }
-results {
-    background: tan;
+#results {
+    background: lightskyblue;
 }
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     #middle-section, #results {
-        font-size: 5vw;
+        font-size: 4vw;
     }
 } 
 

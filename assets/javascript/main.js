@@ -144,6 +144,11 @@ $(document).ready(function () {
         }
 
     });
+    $("#your-name").keypress(function (e) {
+        if (e.which == 13) {
+            $("#submit").click();
+        }
+    })
     // click function for setting user
     $('#submit').on('click', function (e) {
         e.preventDefault();
@@ -212,66 +217,74 @@ $(document).ready(function () {
         return;
     });
 
+    var player1left = function () {
+        console.log("Player 1 Has Left")
+        player1 = {
+            name: playersName,
+            wins: 0,
+            losses: 0,
+            ties: 0,
+            selection: ""
+        }
+        // Add player 1 to database
+        playersRef.child("/player1").set(player1);
+
+        // Set player 1 first turn with fresh game
+        database.ref().child("/turn").set(1);
+
+        // Removes player if they close browser or refresh
+        playersRef.child("/player1").onDisconnect().remove();
+
+        queuedPlayers.shift();
+        console.log(queuedPlayers)
+        queueRef.set(queuedPlayers);
+    }
+    var player2left = function () {
+        console.log("Player 2 Has Left")
+
+        console.log("Added player 2");
+        player2 = {
+            name: playersName,
+            wins: 0,
+            losses: 0,
+            ties: 0,
+            selection: ""
+        }
+        playersRef.child("/player2").set(player2);
+
+        playersRef.child("/player2").onDisconnect().remove();
+
+        queuedPlayers.shift();
+        console.log(queuedPlayers)
+        queueRef.set(queuedPlayers);
+    }
+
+
     // Listener that detects user disconnection events
     playersRef.on("child_removed", function (snapshot) {
         console.log(snapshot)
 
+        if (snapshot.key === "player1") {
+
+            $("#playerOneName").text("Player 1");
+            $("#playerOneStats").empty();
+
+        } else if (snapshot.key === "player2") {
+
+            $("#playerTwoName").text("Player 2");
+            $("#playerTwoStats").empty();
+        }
         if (snapshot.key === "player1" && playersName === queuedPlayers[0].name) {
-
-            // $("#playerOneName").text(player1Name);
-            // $("#playerOneStats").html("Wins: " + player1.wins + ", Losses: " + player1.losses + ", Ties: " + player1.ties);
-
-
-            console.log("Player 1 Has Left")
-            player1 = {
-                name: playersName,
-                wins: 0,
-                losses: 0,
-                ties: 0,
-                selection: ""
-            }
-            // Add player 1 to database
-            playersRef.child("/player1").set(player1);
-
-            // Set player 1 first turn with fresh game
-            database.ref().child("/turn").set(1);
-
-            // Removes player if they close browser or refresh
-            playersRef.child("/player1").onDisconnect().remove();
-
-            queuedPlayers.shift();
-            console.log(queuedPlayers)
-            queueRef.set(queuedPlayers);
-
-        } else if (snapshot.key === "player2" && playersName === queuedPlayers[0].name) {
-            console.log("Player 2 Has Left")
-
-            console.log("Added player 2");
-            player2 = {
-                name: playersName,
-                wins: 0,
-                losses: 0,
-                ties: 0,
-                selection: ""
-            }
-            playersRef.child("/player2").set(player2);
-
-            playersRef.child("/player2").onDisconnect().remove();
-
-            queuedPlayers.shift();
-            console.log(queuedPlayers)
-            queueRef.set(queuedPlayers);
-        }
-        if (!player1 || !player2 && playersName === null) {
-            queueRef.remove();
-        }
-        if (!queuedPlayers == 0) {
-            queueRef.remove();
-        }
-        // $("#playerOneName").text("Player 1")
-        // $("#player1").removeClass("yourTurn");
-        // $("#playerTwoName").text("Player 2")
-        // $("#player2").removeClass("yourTurn");
+            player1left();
+        } 
+        if (snapshot.key === "player2" && playersName === queuedPlayers[0].name) {
+            player2left();
+        } 
+        // if (!player1 || !player2 && playersName !== null) {
+        //     queuedPlayers.shift();
+        //     console.log(queuedPlayers)
+        //     queueRef.set(queuedPlayers);
+        // }
         freshGame = true;
         turn = 1;
         // turnRef.remove();
