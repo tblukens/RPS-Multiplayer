@@ -35,6 +35,13 @@ h1 {
     font-size: 1vw;
 }
 
+#middle-section {
+    background: #2299ff;
+}
+results {
+    background: tan;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     #middle-section, #results {
